@@ -1,4 +1,4 @@
-const {createStore} = require('redux');
+const {createStore, applyMiddleware} = require('redux');
 const reducer = require('./reducers');
 const {logIn, logOut} = require('./actions/user');
 const {addPost} = require('./actions/post');
@@ -16,7 +16,14 @@ const initialState = {
     followers:[],
 };
 
-const store = createStore(reducer, initialState);
+const firstMiddleware = (store) => (next) => (action) => {
+    console.log('액션로깅!@@', action);
+    next(action);
+};
+
+const enhancer = applyMiddleware(firstMiddleware);
+
+const store = createStore(reducer, initialState, enhancer);
 
 // 이벤트리스너 같은 애
 store.subscribe(()=>{ // 화면 바꾸는 subscribe 기능은 react-redux안에 들어있다.
