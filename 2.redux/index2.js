@@ -1,5 +1,5 @@
 const {createStore} = require('redux');
-const reducer = require('./reducers/reducer');
+const reducer = require('./reducers');
 const {logIn, logOut} = require('./actions/user');
 const {addPost} = require('./actions/post');
 
