@@ -21,14 +21,16 @@ const firstMiddleware = (store) => (next) => (action) => {
     next(action);
 };
 
-const enhancer = applyMiddleware(firstMiddleware);
+const thunkMiddleware = (store) => (next) => (action) => {
+    if(typeof action === 'function'){
+        return action(store.dispatch, store.getState);
+    }
+    return next(action);
+}
+
+const enhancer = applyMiddleware(firstMiddleware, thunkMiddleware);
 
 const store = createStore(reducer, initialState, enhancer);
-
-// 이벤트리스너 같은 애
-store.subscribe(()=>{ // 화면 바꾸는 subscribe 기능은 react-redux안에 들어있다.
-    console.log('changed!') // 화면 바꿔주는 코드 여기서...
-})
 
 
 console.log('1st', store.getState());
@@ -39,7 +41,7 @@ store.dispatch(logIn({
     admin: true
 }));
 
-console.log('2nd', store.getState());
+/*console.log('2nd', store.getState());
 
 store.dispatch(addPost({
     userId: 1,
@@ -59,4 +61,4 @@ console.log('4th', store.getState());
 
 store.dispatch(logOut());
 
-console.log('5th', store.getState());
+console.log('5th', store.getState());*/
