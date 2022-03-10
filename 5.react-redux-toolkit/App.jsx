@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {logIn, logOut} from "./actions/user";
+import {logIn} from "./thunks/user";
+import userSlice from "./slices/user";
 
 const App = () => {
     const user = useSelector((state) => state.user);
@@ -15,7 +16,7 @@ const App = () => {
     }, []);
 
     const onLogout = useCallback(() => {
-        dispatch(logOut())
+        dispatch(userSlice.actions.logOut())
     },[])
 
     return (

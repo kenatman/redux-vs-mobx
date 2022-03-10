@@ -1,5 +1,5 @@
 const {configureStore, getDefaultMiddleware} = require('@reduxjs/toolkit')
-const reducer = require('./reducers');
+const reducer = require('./slices');
 
 
 const firstMiddleware = (store) => (next) => (action) => {
