@@ -17,6 +17,7 @@ const postSlice = createSlice({
         [addPost.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.list.push(action.payload);
+            return state;  // immer 사용시 state를 직접 바꾸는 경우 가끔 불변성이 깨지는데 return state; 해주면 해결.
         },
         [addPost.rejected]: (state, action) => {
             state.isLoading = false;

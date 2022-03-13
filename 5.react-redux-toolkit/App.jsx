@@ -2,6 +2,7 @@ import React, {useCallback} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {logIn} from "./thunks/user";
 import userSlice from "./slices/user";
+import {addPost} from "./thunks/post";
 
 const App = () => {
     const user = useSelector((state) => state.user);
@@ -19,6 +20,10 @@ const App = () => {
         dispatch(userSlice.actions.logOut())
     },[])
 
+    const onAddPost = () => {
+        dispatch(addPost())
+    }
+
     return (
         <div>
             {user.isLogginIn
@@ -29,6 +34,7 @@ const App = () => {
             {!user.data
                 ? <button onClick={onClick}>로그인</button>
                 : <button onClick={onLogout}>로그아웃</button>}
+            <button onClick={onAddPost}>게시물 작성</button>
         </div>
     )
 }
