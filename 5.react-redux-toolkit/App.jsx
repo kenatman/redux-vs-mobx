@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {logIn} from "./thunks/user";
 import userSlice from "./slices/user";
@@ -9,10 +9,15 @@ const App = () => {
     // useSelector 쪼개기. 리턴값이 원시값이면 좋다. 객체면 하나 바뀌면 다 리렌더링됨. => 적당한 타협, 너무 이른 최적화는 안 하느니만 못하다.
 /*    const email = useSelector((state) => state.user.email);
     const password = useSelector((state) => state.user.password);*/
-    const posts = useSelector((state) => state.posts);
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const prices = useSelector((state)=> state.user.prices);
+
+    const totalPrices = useMemo(()=>{
+        console.log('memo');
+        return prices.reduce((a, c) => a + c, 0);
+    }, [prices])
 
     // 리덕스 스토어에서 관리할 것 3개
     const [loadings, setLoadings] = useState({});
@@ -87,6 +92,9 @@ const App = () => {
                 <input type="password" value={password} onChange={onChangePassword}/>
                 <button>제출</button>
             </form>
+            <div>
+                <b>{totalPrices}</b>
+            </div>
         </div>
     )
 }
