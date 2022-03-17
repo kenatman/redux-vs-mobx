@@ -3,6 +3,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {logIn} from "./thunks/user";
 import userSlice from "./slices/user";
 import {addPost} from "./thunks/post";
+import {createSelector} from "@reduxjs/toolkit" // reselect
+
+// createSelector는 컴포넌트 밖 캐싱개념.
+const priceSelector = (state)=> state.user.prices;
+
+const sumPriceSelector = createSelector(priceSelector, (prices) => prices.reduce((a, c) => a + c, 0))
+// createSelector를 export하려면 아래처럼 함수형태로 묶어줘야한다.
+
+export const makeSumPriceSelector = () => createSelector(priceSelector, (prices) => prices.reduce((a, c) => a + c, 0));
 
 const App = () => {
     const user = useSelector((state) => state.user);
@@ -12,12 +21,9 @@ const App = () => {
     const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const prices = useSelector((state)=> state.user.prices);
 
-    const totalPrices = useMemo(()=>{
-        console.log('memo');
-        return prices.reduce((a, c) => a + c, 0);
-    }, [prices])
+    const totalPrices = useSelector(makeSumPriceSelector());
+
 
     // 리덕스 스토어에서 관리할 것 3개
     const [loadings, setLoadings] = useState({});
