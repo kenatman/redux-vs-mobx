@@ -4,6 +4,8 @@ const {logIn} = require('../thunks/user');
 const initialState = {
     isLogginIn: false,
     data: null,
+    email: "",
+    password: "",
 }
 
 const userSlice = createSlice({
@@ -12,6 +14,12 @@ const userSlice = createSlice({
     reducers: {
         logOut: (state, action) => {
             state.data = null;
+        },
+        setEmail: (state, action) => {
+            state.email = action.payload;
+        },
+        setPassword: (state, action) => {
+            state.password = action.payload;
         }
     },
     extraReducers: {

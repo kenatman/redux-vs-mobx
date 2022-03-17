@@ -24,6 +24,14 @@ const App = () => {
         dispatch(addPost())
     }
 
+    const onChangeEmail = useCallback((e)=>{
+        dispatch(userSlice.actions.setEmail(e.target.value));
+    },[])
+
+    const onChangePassword = useCallback((e)=>{
+        dispatch(userSlice.actions.setPassword(e.target.value));
+    },[])
+
     return (
         <div>
             {user.isLogginIn
@@ -35,6 +43,10 @@ const App = () => {
                 ? <button onClick={onClick}>로그인</button>
                 : <button onClick={onLogout}>로그아웃</button>}
             <button onClick={onAddPost}>게시물 작성</button>
+            <form>
+                <input type="email" value={user.email} onChange={onChangeEmail}/>
+                <input type="password" value={user.password} onChange={onChangePassword}/>
+            </form>
         </div>
     )
 }
