@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {logIn} from "./thunks/user";
 import userSlice from "./slices/user";
@@ -6,8 +6,14 @@ import {addPost} from "./thunks/post";
 
 const App = () => {
     const user = useSelector((state) => state.user);
+    // useSelector 쪼개기. 리턴값이 원시값이면 좋다. 객체면 하나 바뀌면 다 리렌더링됨. => 적당한 타협, 너무 이른 최적화는 안 하느니만 못하다.
+/*    const email = useSelector((state) => state.user.email);
+    const password = useSelector((state) => state.user.password);*/
     const posts = useSelector((state) => state.posts);
     const dispatch = useDispatch();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
 
     const onClick = useCallback(() => {
         dispatch(logIn({
@@ -25,12 +31,17 @@ const App = () => {
     }
 
     const onChangeEmail = useCallback((e)=>{
-        dispatch(userSlice.actions.setEmail(e.target.value));
+       setEmail(e.target.value);
     },[])
 
     const onChangePassword = useCallback((e)=>{
-        dispatch(userSlice.actions.setPassword(e.target.value));
+        setPassword(e.target.value);
     },[])
+
+    const onSubmit = useCallback((e)=>{
+        e.preventDefault();
+        dispatch(userSlice.actions.setLoginForm({email, password}))
+    },[dispatch ,email, password])
 
     return (
         <div>
@@ -43,9 +54,10 @@ const App = () => {
                 ? <button onClick={onClick}>로그인</button>
                 : <button onClick={onLogout}>로그아웃</button>}
             <button onClick={onAddPost}>게시물 작성</button>
-            <form>
-                <input type="email" value={user.email} onChange={onChangeEmail}/>
-                <input type="password" value={user.password} onChange={onChangePassword}/>
+            <form onSubmit={onSubmit}>
+                <input type="email" value={email} onChange={onChangeEmail}/>
+                <input type="password" value={password} onChange={onChangePassword}/>
+                <button>제출</button>
             </form>
         </div>
     )

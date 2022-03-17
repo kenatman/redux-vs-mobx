@@ -15,11 +15,15 @@ const userSlice = createSlice({
         logOut: (state, action) => {
             state.data = null;
         },
-        setEmail: (state, action) => {
+       /* setEmail: (state, action) => {
             state.email = action.payload;
         },
         setPassword: (state, action) => {
             state.password = action.payload;
+        }*/
+        setLoginForm: (state, action) => {
+            state.email = action.payload.email;
+            state.password = action.payload.password;
         }
     },
     extraReducers: {
