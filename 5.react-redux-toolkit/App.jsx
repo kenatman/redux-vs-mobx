@@ -14,12 +14,40 @@ const App = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    // 리덕스 스토어에서 관리할 것 3개
+    const [loadings, setLoadings] = useState({});
+    const [errors, setErrors] = useState({});
+    const [dones, setDones] = useState({});
 
-    const onClick = useCallback(() => {
-        dispatch(logIn({
-            id: 'kenatman',
-            password: '비밀번'
-        }))
+    // 컴포넌트에서 관리할 것
+    const [loadingIds, setLoadingIds] = useState([]);
+
+
+
+    const onClick = useCallback(async () => {
+        const id = new Date().valueOf();
+        // 리덕스 관리용
+        setLoadings((prev) => ({
+            ...prev,
+            [id]: { type: "LOGIN_LOADING" }
+            }))
+        // 컴포넌트 관리용
+        setLoadingIds((prev) => prev.concat(id));
+        try{
+            const response  = await axios.post('/login');
+
+            setDones((prev) => ({...prev, [id]: {type: "LOGIN_DONE"}}));
+        }
+        catch(err){
+            setErrors((prev) => ({...prev, [id]: {type: "LOGIN_ERROR"}}))
+        }
+        finally {
+            setLoadings((prev) => {
+                const newObj = JSON.parse(JSON.stringify(prev));
+                delete newObj[id];
+                return newObj;
+            });
+        }
     }, []);
 
     const onLogout = useCallback(() => {
