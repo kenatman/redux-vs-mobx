@@ -1,8 +1,11 @@
 import React, {useCallback} from 'react';
 import {useLocalStore, useObserver} from 'mobx-react';
-import {userStore, postStore} from './store'
+import useStore from "./useStore";
+/*import {userStore, postStore} from './store'*/
 
 const App = () => {
+    const {userStore, postStore} = useStore();
+
     const state = useLocalStore(() => ({
         name: '',
         password: '',
