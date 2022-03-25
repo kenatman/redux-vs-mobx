@@ -11,4 +11,4 @@ const post = (prevState=initialState, action) => {
             return prevState;
     }
 };
-module.exports = post;
+export default post;

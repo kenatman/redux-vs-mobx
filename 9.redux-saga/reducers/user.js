@@ -39,4 +39,4 @@ const user = (prevState=initialState, action) => {
             return prevState;
     }
 };
-module.exports = user;
+export default user;

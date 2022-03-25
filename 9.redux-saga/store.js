@@ -1,8 +1,8 @@
-const {createStore, applyMiddleware, compose} = require('redux');
-const reducer = require('./reducers');
-const {composeWithDevTools} = require('redux-devtools-extension');
-const createSagaMiddleware = require('redux-saga');
-const rootSaga = require('./sagas');
+import {createStore, applyMiddleware, compose} from 'redux';
+import reducer  from './reducers';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './sagas';
 
 const initialState = {
     user: {
@@ -34,4 +34,4 @@ const store = createStore(reducer, initialState, enhancer);
 
 sagaMiddleware.run(rootSaga);
 
-module.exports = store;
+export default store;

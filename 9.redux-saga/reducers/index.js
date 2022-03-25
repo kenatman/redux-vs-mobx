@@ -1,8 +1,8 @@
-const {combineReducers}  = require('redux');
-const userReducer = require('./user');
-const postReducer = require('./post');
+import {combineReducers}  from 'redux';
+import userReducer from './user';
+import postReducer from './post';
 
-module.exports = combineReducers({
+export default combineReducers({
     user: userReducer,
     posts: postReducer,
 })

@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {logIn, logOut} from "./actions/user";
 
@@ -6,6 +6,12 @@ const App = () => {
     const user = useSelector((state) => state.user);
     const posts = useSelector((state) => state.posts);
     const dispatch = useDispatch();
+
+    useEffect(()=>{
+        dispatch({
+            type: 'HELLO_SAGA'
+        })
+    },[])
 
     const onClick = useCallback(() => {
         dispatch(logIn({
