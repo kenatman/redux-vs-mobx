@@ -10,7 +10,13 @@ const App = () => {
     useEffect(()=>{
         dispatch({
             type: 'HELLO_SAGA'
-        })
+        });
+        dispatch({
+            type: 'HELLO_SAGA'
+        });
+        dispatch({
+            type: 'HELLO_SAGA'
+        });
     },[])
 
     const onClick = useCallback(() => {
