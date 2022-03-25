@@ -1,6 +1,7 @@
 import React, {useCallback} from 'react';
-import {useLocalStore, useObserver, useAsObservableSource} from 'mobx-react';
+import {useLocalStore, useObserver, useAsObservableSource, useLocalObservable} from 'mobx-react';
 // useAsObservableSource는 prop들에 적용하면 observable이 된다.
+// useLocalStore -> useLocalObservable mobx@6 변경사항
 import {action} from 'mobx';
 import useStore from "./useStore";
 /*import {userStore, postStore} from './store'*/
@@ -9,7 +10,7 @@ const App = () => {
     const {userStore, postStore} = useStore();
     // observable은 원시타입까지 디스트럭처링하면 꺠진다. 객체단위까지만 디스트럭처링해야함.
 
-    const state = useLocalStore(() => ({
+    const state = useLocalObservable(() => ({
         name: '',
         password: '',
         onChangeName: action(function(e){
@@ -38,7 +39,7 @@ const App = () => {
             {!userStore.data
                 ? <button onClick={onLogin}>로그인</button>
                 : <button onClick={onLogout}>로그아웃</button>}
-            <div>{postStore.data.length}</div>
+            <div>{postStore.postLength}</div>
             <div>
                 <input value={state.name} onChange={state.onChangeName}/>
                 <input value={state.password} onChange={state.onChangePassword}/>
