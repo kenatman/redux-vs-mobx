@@ -1,7 +1,8 @@
 const {createStore, applyMiddleware, compose} = require('redux');
 const reducer = require('./reducers');
 const {composeWithDevTools} = require('redux-devtools-extension');
-
+const createSagaMiddleware = require('redux-saga');
+const rootSaga = require('./sagas');
 
 const initialState = {
     user: {
@@ -21,12 +22,16 @@ const thunkMiddleware = (store) => (next) => (action) => {
         return action(store.dispatch, store.getState);
     }
     return next(action);
-}
+};
+
+const sagaMiddleware = createSagaMiddleware();
 
 const enhancer = process.env.NODE_ENV === 'production'
-    ? compose(applyMiddleware(firstMiddleware, thunkMiddleware))
-    : composeWithDevTools(applyMiddleware(firstMiddleware, thunkMiddleware));
+    ? compose(applyMiddleware(firstMiddleware, thunkMiddleware, sagaMiddleware))
+    : composeWithDevTools(applyMiddleware(firstMiddleware, thunkMiddleware, sagaMiddleware));
 
 const store = createStore(reducer, initialState, enhancer);
+
+sagaMiddleware.run(rootSaga);
 
 module.exports = store;
