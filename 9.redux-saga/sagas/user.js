@@ -3,16 +3,17 @@ import {LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE} from '../reducers/user'
 
 const HELLO_SAGA = 'HELLO_SAGA';
 
-function loginAPI() {
+function loginAPI(params) {
     // 서버에 요청
+    // return axios.post(url, params);
 }
 // call, fork 둘다 함수를 호출하는 것.
 // call은 순서가 중요할 때 사용. 끝날 때까지 기다림.
 // fork는 순서 상관 없을 때. 요청하고 다음것 실행.
-function* login() {
+function* login(action) {
     try {
-        yield fork(logger); // logger는 내 기록을 로깅하는 함수, 10초 걸림.
-        yield call(loginAPI);
+        // yield fork(logger); // logger는 내 기록을 로깅하는 함수, 10초 걸림.
+        yield call(loginAPI, action.data);
         yield put({ // put은 dispatch와 동일
             type: LOG_IN_SUCCESS
         })
