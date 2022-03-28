@@ -7,43 +7,22 @@ const App = () => {
     const posts = useSelector((state) => state.posts);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch({
-            type: 'HELLO_SAGA'
-        });
-        dispatch({
-            type: 'HELLO_SAGA'
-        });
-        dispatch({
-            type: 'HELLO_SAGA'
-        });
-        dispatch({
-            type: 'HELLO_SAGA'
-        });
-        dispatch({
-            type: 'HELLO_SAGA'
-        });
-        dispatch({
-            type: 'HELLO_SAGA'
-        });
-        dispatch({
-            type: 'HELLO_SAGA'
-        });
-        dispatch({
-            type: 'HELLO_SAGA'
-        });
-    },[])
 
     const onClick = useCallback(() => {
-        dispatch(logIn({
-            id: 'kenatman',
-            password: '비밀번'
-        }))
+        dispatch(
+            {
+                type: 'LOG_IN_REQUEST',
+                data: {
+                    id: 'kenatman',
+                    password: '비밀번'
+                }
+            }
+        )
     }, []);
 
     const onLogout = useCallback(() => {
         dispatch(logOut())
-    },[])
+    }, [])
 
     return (
         <div>
