@@ -1,12 +1,17 @@
 import React, {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {logIn, logOut} from "./actions/user";
+
 
 const App = () => {
     const user = useSelector((state) => state.user);
     const posts = useSelector((state) => state.posts);
     const dispatch = useDispatch();
 
+    useEffect(()=>{
+        dispatch({type: 'HELLO_SAGA'});
+        dispatch({type: 'HELLO_SAGA'});
+        dispatch({type: 'HELLO_SAGA'});
+    },[])
 
     const onClick = useCallback(() => {
         dispatch(
@@ -33,7 +38,7 @@ const App = () => {
                     : '로그인 해주세요!@'}
             {!user.data
                 ? <button onClick={onClick}>로그인</button>
-                : <button onClick={onLogout}>로그아웃</button>}
+                : <button>로그아웃</button>}
         </div>
     )
 }
